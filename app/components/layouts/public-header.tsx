@@ -20,8 +20,11 @@ export default function PublicHeader({
       <PublicMobileHeader className="_app-layout block py-4 lg:py-6 lg:hidden" />
       <header
         className={cn(
+          className,
           "_app-layout py-4 lg:py-6 hidden lg:flex justify-between items-center gap-x-28",
-          className
+          {
+            "shadow-sm": headerType === "dark",
+          }
         )}
       >
         <figure className="flex-none">
@@ -31,7 +34,7 @@ export default function PublicHeader({
           <div className="w-full max-w-[900px] flex items-center shadow rounded-md overflow-hidden bg-white">
             <input
               type="search"
-              placeholder="Search the business you want to review..."
+              placeholder="Search the business you want to view reviews..."
               className="w-full px-4 py-2 outline-none"
             />
             <button type="submit" className="p-2.5 bg-primary">
