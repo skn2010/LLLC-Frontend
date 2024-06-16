@@ -19,7 +19,7 @@ export default function ProfileSection({ className }: Props) {
 
       <div className="grow">
         <TotalReviewStatistics />
-        <ReviewDistribution className="" />
+        <ReviewDistribution className="mt-10" />
         <h4 className="mt-10 text-[16px] md:text-[20px] lg:text-[24px] font-bold text-gray-700">
           More about me
         </h4>
