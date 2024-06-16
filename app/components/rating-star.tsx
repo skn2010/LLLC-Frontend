@@ -11,7 +11,7 @@ type Props = {
 export default function RatingStar({
   rating,
   className,
-  size = 18,
+  size = 30,
   ...others
 }: Props) {
   return (
@@ -24,6 +24,9 @@ export default function RatingStar({
             key={`count-${count}`}
             size={size}
             color={count <= rating ? "orange" : "gray"}
+            className={cn("p-1 border rounded-sm", {
+              "border-orange-200": count <= rating,
+            })}
           />
         ))}
     </div>
