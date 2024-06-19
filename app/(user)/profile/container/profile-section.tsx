@@ -3,6 +3,7 @@ import ReviewDetailsCard from "@/app/components/review-details-card";
 import ProfileCard from "../components/profile-card";
 import TotalReviewStatistics from "../components/total-review-statistics";
 import ReviewDistribution from "../components/review-distribution";
+import CompanyList from "../components/company-list";
 
 type Props = {
   className?: string;
@@ -15,6 +16,10 @@ export default function ProfileSection({ className }: Props) {
     >
       <div className="w-full md:max-w-[350px]">
         <ProfileCard />
+        <CompanyList className="mt-16" />
+        <button className="mt-10 text-sm font-semibold underline text-secondary">
+          Add new company
+        </button>
       </div>
 
       <div className="grow">
@@ -38,7 +43,7 @@ export default function ProfileSection({ className }: Props) {
           Reviews
         </h4>
 
-        <div className="mt-3 grid gap-y-6">
+        <div className="mt-8 grid gap-y-16">
           <ReviewDetailsCard />
           <ReviewDetailsCard />
           <ReviewDetailsCard />

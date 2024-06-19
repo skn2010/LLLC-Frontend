@@ -4,16 +4,16 @@ import { BsLightbulb } from "react-icons/bs";
 import { FaRegHandPeace } from "react-icons/fa6";
 import { FaRegSadTear } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
-import cn from "../utils/class-names";
-import RatingStar from "./rating-star";
+import cn from "@/app/utils/class-names";
+import RatingStar from "@/app/components/rating-star";
 
 type Props = {
   className?: string;
 };
 
-export default function ReviewDetailsCard({ className }: Props) {
+export default function ReviewCard({ className }: Props) {
   return (
-    <div className={cn(className)}>
+    <div className={cn(className, "")}>
       <div className="flex justify-between">
         <div className="flex items-center gap-x-4">
           <figure>
@@ -22,13 +22,11 @@ export default function ReviewDetailsCard({ className }: Props) {
               alt="profile-img"
               width={80}
               height={80}
-              className="w-full max-w-[45px] aspect-[1/1] rounded-md object-cover"
+              className="w-full max-w-[40px] aspect-[1/1] rounded-full object-cover"
             />
           </figure>
           <div>
-            <h4 className="text-sm font-bold text-gray-700">
-              Tighter Top Restaurant
-            </h4>
+            <h4 className="text-sm font-bold text-gray-700">Yumick gharti</h4>
             <p className="mt-1 text-xs text-gray-700">Pokhara Kaski</p>
           </div>
         </div>
