@@ -1,10 +1,15 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { RiSearch2Line } from "react-icons/ri";
 
 import cn from "@/app/utils/class-names";
 import { publicNavList } from "@/app/constants";
 import Logo from "../ui/logo";
 import PublicMobileHeader from "./public-mobile-header";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import LoginWithGoogle from "../login-with-google";
+import Image from "next/image";
+import getUserDataFromServer from "@/app/utils/get-user-data-from-server";
 
 type Props = {
   headerType?: "dark" | "light";
@@ -15,8 +20,12 @@ export default function PublicHeader({
   headerType = "dark",
   className,
 }: Props) {
+  const { token, user } = getUserDataFromServer();
+
   return (
-    <>
+    <GoogleOAuthProvider
+      clientId={process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID || ""}
+    >
       <PublicMobileHeader className="_app-layout block py-4 lg:py-6 lg:hidden" />
       <header
         className={cn(
@@ -57,18 +66,20 @@ export default function PublicHeader({
               </Link>
             );
           })}
-
-          <button
-            className={cn("_btn", {
-              "_secondary-light-outline-btn": headerType === "light",
-              "_secondary-dark-outline-btn": headerType === "dark",
-            })}
-          >
-            Login
-          </button>
-          <button className="_btn _primary-btn">Sign Up</button>
+          {user && token ? (
+            <Link href="/profile">
+              <Image
+                src={user?.avatar as string}
+                height={30}
+                width={30}
+                alt="avatar"
+              />
+            </Link>
+          ) : (
+            <LoginWithGoogle headerType={headerType} />
+          )}
         </div>
       </header>
-    </>
+    </GoogleOAuthProvider>
   );
 }

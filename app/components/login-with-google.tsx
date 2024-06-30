@@ -1,0 +1,73 @@
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useGoogleOneTapLogin } from "@react-oauth/google";
+import cn from "../utils/class-names";
+import login from "../services/auth/login.service";
+
+type Props = {
+  headerType?: "dark" | "light";
+  className?: string;
+};
+
+export default function LoginWithGoogle({ className, headerType }: Props) {
+  const router = useRouter();
+
+  const googleLogin = async (credential: string) => {
+    try {
+      const response = await login(credential);
+      console.log(response);
+
+      // Let set user data
+      const request = await fetch("/api/auth", {
+        method: "POST",
+        body: JSON.stringify({
+          user: response.data.user,
+          token: response.data.accessToken,
+        }),
+      });
+
+      if (!request.ok) {
+        alert(
+          response?.message || "Something went wrong, please try again later."
+        );
+
+        return;
+      }
+
+      alert(response?.message || "Login successful.");
+      router.push("/profile");
+    } catch (e: any) {
+      console.log(e);
+    }
+  };
+
+  useGoogleOneTapLogin({
+    onSuccess: (credentialResponse) => {
+      if (!credentialResponse?.credential) {
+        alert("Login failed!");
+        return;
+      }
+
+      googleLogin(credentialResponse.credential as string);
+    },
+    onError: () => {
+      console.log("Login Failed");
+    },
+  });
+
+  return (
+    <>
+      <Link
+        href={"/login"}
+        className={cn("_btn", className, {
+          "_secondary-light-outline-btn": headerType === "light",
+          "_secondary-dark-outline-btn": headerType === "dark",
+        })}
+      >
+        Login
+      </Link>
+    </>
+  );
+}
