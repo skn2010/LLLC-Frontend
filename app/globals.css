@@ -31,6 +31,14 @@
   ._secondary-dark-outline-btn {
     @apply border text-gray-700 border-gray-300;
   }
+
+  ._label {
+    @apply block text-sm text-gray-600;
+  }
+
+  ._input {
+    @apply p-2.5 block w-full text-[14px] border outline-none rounded-md border-gray-200 focus:border-gray-500;
+  }
 }
 
 ._line-clamp-2 {
