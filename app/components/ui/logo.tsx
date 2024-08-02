@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import cn from "@/app/utils/class-names";
 
@@ -15,12 +16,14 @@ export default function Logo({
   className = "",
 }: Props) {
   return (
-    <Image
-      src={type === "white" ? "/white-logo.png" : "/black-logo.png"}
-      alt="logo"
-      width={width}
-      height={height}
-      className={cn("", className)}
-    />
+    <Link href={"/"}>
+      <Image
+        src={type === "white" ? "/white-logo.png" : "/black-logo.png"}
+        alt="logo"
+        width={width}
+        height={height}
+        className={cn("", className)}
+      />
+    </Link>
   );
 }

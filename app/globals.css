@@ -37,7 +37,7 @@
   }
 
   ._input {
-    @apply p-2.5 block w-full text-[14px] border outline-none rounded-md border-gray-200 focus:border-gray-500;
+    @apply p-2.5 block w-full text-[14px] border outline-none rounded-md bg-transparent border-gray-200 focus:border-gray-500;
   }
 }
 
