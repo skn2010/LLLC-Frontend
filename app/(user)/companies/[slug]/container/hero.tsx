@@ -4,9 +4,10 @@ import RatingStar from "@/app/components/rating-star";
 
 type Props = {
   className?: string;
+  companyDetails: TCompany;
 };
 
-export default function Hero({ className }: Props) {
+export default function Hero({ companyDetails, className }: Props) {
   return (
     <section
       style={{ backgroundImage: `url(${"/hero.png"})` }}
@@ -17,7 +18,9 @@ export default function Hero({ className }: Props) {
     >
       <div className="_app-layout text-white">
         <div className="_container-layout pb-10">
-          <h1 className="text-2xl lg:text-4xl font-bold">Dumpling Home</h1>
+          <h1 className="text-2xl lg:text-4xl font-bold">
+            {companyDetails.name}
+          </h1>
 
           <div className="mt-4 flex flex-wrap items-center gap-4">
             <RatingStar rating={4} />
@@ -26,14 +29,15 @@ export default function Hero({ className }: Props) {
 
           <div className="mt-4">
             <p className="text-sm font-semibold">
-              10:30 Am - 5:30 PM | created in 2024-41-11
+              {`${companyDetails.opening_time} - ${companyDetails.closing_time} `}
+              | created in {companyDetails.created_date.split("T")[0]}
             </p>
           </div>
 
           <div className="mt-6 flex items-center gap-x-4">
             <figure>
               <Image
-                src={"/hero.png"}
+                src={(companyDetails.created_by as TUser).avatar || "/hero.png"}
                 alt="profile-img"
                 width={80}
                 height={80}
@@ -41,8 +45,12 @@ export default function Hero({ className }: Props) {
               />
             </figure>
             <div>
-              <h4 className="text-sm font-bold text-gray-100">Bishnu Thapa</h4>
-              <p className="mt-1 text-xs text-gray-100">Pokhara Kaski</p>
+              <h4 className="text-sm font-bold capitalize text-gray-100">
+                {(companyDetails.created_by as TUser).full_name}
+              </h4>
+              <p className="mt-1 text-xs text-gray-100">
+                {(companyDetails.created_by as TUser).address || "-"}
+              </p>
             </div>
           </div>
         </div>

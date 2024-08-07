@@ -39,8 +39,6 @@ type Props = {
 export default async function http(url: string, props?: Props) {
   const { includeAuth = true, token, ...options } = props || {};
 
-  console.log(options, " this is an option var");
-
   let authToken: string | null = null;
 
   if (includeAuth && !token) {
