@@ -5,6 +5,7 @@ import Modal from "@/app/components/ui/modal";
 import { updateUser } from "@/app/services/user/user-user.service";
 import { revalidateTagInServerComponent } from "@/app/services/revalidation-cache/revalidate-sever-component-cache";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 type Props = {
   isOpen: boolean;
@@ -37,12 +38,12 @@ export default function EditProfileDetailsModal(props: Props) {
 
     // Validation
     if (!address.trim()) {
-      alert("Please enter the address.");
+      toast.error("Please enter the address.");
       return;
     }
 
     if (!contact) {
-      alert("Please enter the contact number.");
+      toast.error("Please enter the contact number.");
       return;
     }
 
@@ -60,10 +61,10 @@ export default function EditProfileDetailsModal(props: Props) {
       // Close the modal and reset the fields
       props.setIsOpen(false);
       resetFields();
-      alert(response.message || "User's details updated successfully.");
+      toast.success(response.message || "User's details updated successfully.");
     } catch (e) {
       console.log(e);
-      alert("Oops, something went wrong.");
+      toast.error("Oops, something went wrong.");
       return null;
     }
   };

@@ -2,11 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import { updateCompanyApi } from "@/app/services/company/update-company.service";
 
 type Props = {
   categoryDropdown: TCategory[];
   companyData: TCompany;
+};
+
+type Location = {
+  latitude: string | number;
+  longitude: string | number;
 };
 
 export default function EditCompanyForm({
@@ -23,7 +29,7 @@ export default function EditCompanyForm({
     openingTime: "",
     closingTime: "",
   });
-  const [location, setLocation] = useState({
+  const [location, setLocation] = useState<Location>({
     latitude: "",
     longitude: "",
   });
@@ -61,10 +67,10 @@ export default function EditCompanyForm({
         },
       });
 
-      alert(response.message || "Category created successfully.");
+      toast.success(response.message || "Category created successfully.");
       router.back();
     } catch (e: any) {
-      alert(e.message);
+      toast.error(e.message);
     }
   };
 

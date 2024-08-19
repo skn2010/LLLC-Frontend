@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useGoogleOneTapLogin } from "@react-oauth/google";
+import { toast } from "react-toastify";
 import cn from "../utils/class-names";
 import login from "../services/auth/login.service";
 
@@ -29,14 +30,14 @@ export default function LoginWithGoogle({ className, headerType }: Props) {
       });
 
       if (!request.ok) {
-        alert(
+        toast.error(
           response?.message || "Something went wrong, please try again later."
         );
 
         return;
       }
 
-      alert(response?.message || "Login successful.");
+      toast.success(response?.message || "Login successful.");
       router.push("/profile");
     } catch (e: any) {
       console.log(e);
@@ -46,7 +47,7 @@ export default function LoginWithGoogle({ className, headerType }: Props) {
   useGoogleOneTapLogin({
     onSuccess: (credentialResponse) => {
       if (!credentialResponse?.credential) {
-        alert("Login failed!");
+        toast.error("Login failed!");
         return;
       }
 

@@ -3,8 +3,8 @@ import cn from "@/app/utils/class-names";
 type Props = {
   className?: string;
   location: {
-    latitude: number;
-    longitude: number;
+    latitude: number | string;
+    longitude: number | string;
   };
 };
 

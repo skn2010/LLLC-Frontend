@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import { createCompanyApi } from "@/app/services/company/create-company.service";
 
 type Props = {
@@ -45,10 +46,10 @@ export default function CreateCompanyForm({ categoryDropdown }: Props) {
         },
       });
 
-      alert(response.message || "Category created successfully.");
+      toast.success(response.message || "Category created successfully.");
       router.push(response.data._id);
     } catch (e: any) {
-      alert(e.message);
+      toast.error(e.message);
     }
   };
 

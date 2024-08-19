@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Modal from "@/app/components/ui/modal";
 import { deleteCompanyApi } from "@/app/services/company/delete-company.service";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 type Props = {
   isOpen: boolean;
@@ -48,11 +49,11 @@ export default function DeleteCompanyModal({
         params: { companyId: companyData.id },
       });
 
-      alert(response.message);
+      toast.success(response.message);
       router.push("/profile");
       setIsOpen(false);
     } catch (e: any) {
-      alert(e.message);
+      toast.error(e.message);
     }
   };
 

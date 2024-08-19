@@ -42,9 +42,23 @@ type TCompany = {
     fileName: string;
     contentType: string;
   } | null;
-  location: { latitude: number; longitude: number };
+  location: { latitude: number | string; longitude: number | string };
   category: string | TCategory | null;
   created_by: string | TUser | null;
   updated_date: string | null;
   created_date: string;
+};
+
+type TMenu = {
+  _id: string;
+  name: string;
+  description: string;
+  images: TImage[];
+  price?: number;
+  tag: "POPULAR" | "NEW";
+  created_by: string;
+  is_deleted: boolean;
+  company: string;
+  created_date: Date;
+  updated_date: Date;
 };
