@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import ImageUploader from "@/app/components/ui/image-uploader";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import cn from "@/app/utils/class-names";
 import { createMenuApi } from "@/app/services/menu/create-menu.service";
-import { toast } from "react-toastify";
+import ImageUploader from "@/app/components/ui/image-uploader";
+import { updateMenuApi } from "@/app/services/menu/update-menu.service";
 
-type Props = { className?: string; companyId: string };
+type Props = { className?: string; companyId: string; menu: TMenuDetails };
 
-export default function CreateMenuForm({ className, companyId }: Props) {
+export default function EditMenuForm({ className, companyId, menu }: Props) {
   const [images, setImages] = useState<any[]>([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState<number>(0);
@@ -17,16 +18,26 @@ export default function CreateMenuForm({ className, companyId }: Props) {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    setName(menu.name);
+    setPrice(menu?.price || 0);
+    setTag(menu.tag);
+    setDescription(menu.description);
+    setImages(menu.images);
+  }, [menu]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setIsLoading(true);
 
     try {
-      const response = await createMenuApi({
+      const response = await updateMenuApi({
         payload: { name, price, tag, description, images },
-        params: { companyId },
+        params: { menuId: menu._id },
       });
+
+      console.log(response);
 
       toast.success(response.message);
     } catch (e: any) {
@@ -40,10 +51,10 @@ export default function CreateMenuForm({ className, companyId }: Props) {
     <form onSubmit={handleSubmit} className={cn(className, "")}>
       <div>
         <h3 className="text-[16px] md:text-[20px] lg:text-[24px] font-bold text-gray-700">
-          Create a menu
+          Update a menu
         </h3>
         <p className="mt-2.5 text-md text-gray-700">
-          Please fill all the fields to create a menu.
+          Please fill all the fields to update a menu.
         </p>
       </div>
 
@@ -112,7 +123,7 @@ export default function CreateMenuForm({ className, companyId }: Props) {
           className="_btn _primary-btn"
           type="submit"
         >
-          Create
+          Update
         </button>
       </div>
     </form>

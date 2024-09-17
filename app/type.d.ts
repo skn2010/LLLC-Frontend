@@ -59,6 +59,20 @@ type TMenu = {
   created_by: string;
   is_deleted: boolean;
   company: string;
-  created_date: Date;
-  updated_date: Date;
+  created_date: string;
+  updated_date: string;
+};
+
+type TMenuDetails = {
+  _id: string;
+  name: string;
+  description: string;
+  images: TImage[];
+  price?: number;
+  tag: "POPULAR" | "NEW";
+  created_by: TUser | null;
+  is_deleted: boolean;
+  company: TCompany | null;
+  created_date: string;
+  updated_date: string;
 };

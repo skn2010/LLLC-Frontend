@@ -16,7 +16,7 @@ async function loadData(companyId: string) {
     getCompanyDetailsApi({
       params: { companyId },
       next: {
-        revalidate: 3600,
+        cache: "no-store",
         tags: ["company", `company-details-${companyId}`],
       },
     });
@@ -61,7 +61,7 @@ export default async function CompanyDetails({
               />
               <hr className="my-10" />
               <AboutCompany companyDescription={companyData.data.description} />
-              <MenuList className="mt-10" />
+              <MenuList companyId={params.slug} className="mt-10" />
               <ReviewList className="mt-10" />
             </div>
             <div className="mt-10 w-full md:max-w-[350px]">

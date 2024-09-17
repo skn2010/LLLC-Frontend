@@ -40,7 +40,10 @@ export default function CreateCompanyForm({ categoryDropdown }: Props) {
           contact_number: contactNumber,
           opening_time: time.openingTime,
           closing_time: time.closingTime,
-          location,
+          location: {
+            latitude: Number(location.latitude),
+            longitude: Number(location.longitude),
+          },
           category,
           description,
         },

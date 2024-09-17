@@ -8,6 +8,11 @@ const nextConfig = {
         port: "",
         // pathname: '/account123/**',
       },
+      {
+        protocol: "https",
+        hostname: "f005.backblazeb2.com",
+        port: "",
+      },
     ],
   },
 };

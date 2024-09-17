@@ -1,0 +1,53 @@
+import { redirect } from "next/navigation";
+import AppLayout from "@/app/components/layouts/app-layout";
+import ContainerLayout from "@/app/components/layouts/container-layout";
+import Footer from "@/app/components/layouts/footer";
+import PublicHeader from "@/app/components/layouts/public-header";
+import ImageSlider from "./container/image-slider";
+import MenuInfo from "./container/menu-info";
+import { getMenuDetailsApi } from "@/app/services/menu/get-menu.service";
+
+async function loadData(menuId: string): Promise<[TMenuDetails | null]> {
+  const menuDetails = async () =>
+    getMenuDetailsApi({
+      params: { menuId },
+      next: {
+        cache: "no-store",
+        tags: ["menu", `menu-details-${menuId}`],
+      },
+    });
+
+  try {
+    const [menuData] = await Promise.all([menuDetails()]);
+    return [menuData.data];
+  } catch (e) {
+    console.log("Error on companies/id/menus/id");
+    console.log(e);
+    return [null];
+  }
+}
+
+export default async function ViewMenu({
+  params,
+}: {
+  params: { menuId: string };
+}) {
+  const [menuData] = await loadData(params.menuId);
+
+  if (!menuData) {
+    redirect("/");
+  }
+
+  return (
+    <>
+      <PublicHeader headerType="dark" />
+      <AppLayout className="pt-6 pb-10">
+        <ContainerLayout>
+          <ImageSlider images={menuData.images.map((item) => item.url)} />
+          <MenuInfo menu={menuData} className="mt-8" />
+        </ContainerLayout>
+      </AppLayout>
+      <Footer />
+    </>
+  );
+}
