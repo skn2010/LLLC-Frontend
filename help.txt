@@ -1,0 +1,1 @@
+change the view (design of menu details page) => use columns for images listing

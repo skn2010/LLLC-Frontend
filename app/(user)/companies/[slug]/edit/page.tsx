@@ -10,9 +10,6 @@ async function loadData(companyId: string) {
   const getCompanyDetails = async () =>
     getCompanyDetailsApi({
       params: { companyId },
-      next: {
-        cache: "no-store",
-      },
     });
 
   const getCategoryDropdown = async () => {

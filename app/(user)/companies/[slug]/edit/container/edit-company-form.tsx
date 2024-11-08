@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import ImageUploader from "@/app/components/ui/image-uploader";
 import { updateCompanyApi } from "@/app/services/company/update-company.service";
+import { revalidateTagInServerComponent } from "@/app/services/revalidation-cache/revalidate-sever-component-cache";
 
 type Props = {
   categoryDropdown: TCategory[];
@@ -22,6 +24,7 @@ export default function EditCompanyForm({
   const router = useRouter();
 
   // Required state for creating a restaurant
+  const [coverImage, setCoverImage] = useState<any[]>([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [contactNumber, setContactNumber] = useState("");
@@ -47,6 +50,10 @@ export default function EditCompanyForm({
     setLocation(companyData.location);
     setCategory(companyData.category as string);
     setDescription(companyData.description);
+
+    if (companyData?.cover_image) {
+      setCoverImage([companyData.cover_image]);
+    }
   }, [companyData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -58,17 +65,23 @@ export default function EditCompanyForm({
         payload: {
           name,
           email,
-          contact_number: contactNumber,
-          opening_time: time.openingTime,
-          closing_time: time.closingTime,
-          location,
+          contactNumber: contactNumber,
+          openingTime: time.openingTime,
+          closingTime: time.closingTime,
+          location: {
+            latitude: Number(location.latitude),
+            longitude: Number(location.longitude),
+          },
           category,
           description,
+          coverImage: coverImage[0],
         },
       });
 
-      toast.success(response.message || "Category created successfully.");
-      router.back();
+      revalidateTagInServerComponent({ tags: ["company"] });
+      toast.success(response.message || "Company created successfully.");
+      router.push(`/companies/${companyData._id}`);
+      router.refresh();
     } catch (e: any) {
       toast.error(e.message);
     }
@@ -196,6 +209,15 @@ export default function EditCompanyForm({
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           className="_input mt-1"
+        />
+      </div>
+
+      <div className="mt-8">
+        <label className="_label mb-2">Add the cover image</label>
+        <ImageUploader
+          images={coverImage}
+          setImages={setCoverImage}
+          maxImages={1}
         />
       </div>
 

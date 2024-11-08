@@ -1,3 +1,10 @@
+type TImage = {
+  url: string;
+  fileId: string;
+  fileName: string;
+  container_name: string;
+};
+
 type TUser = {
   _id: string;
   full_name: string;

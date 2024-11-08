@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import ImageUploader from "@/app/components/ui/image-uploader";
 import { createCompanyApi } from "@/app/services/company/create-company.service";
 
 type Props = {
@@ -13,6 +14,7 @@ export default function CreateCompanyForm({ categoryDropdown }: Props) {
   const router = useRouter();
 
   // Required state for creating a restaurant
+  const [coverImage, setCoverImage] = useState<File[]>([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [contactNumber, setContactNumber] = useState("");
@@ -34,18 +36,19 @@ export default function CreateCompanyForm({ categoryDropdown }: Props) {
 
     try {
       const response = await createCompanyApi({
-        data: {
+        payload: {
           name,
           email,
-          contact_number: contactNumber,
-          opening_time: time.openingTime,
-          closing_time: time.closingTime,
+          contactNumber,
+          openingTime: time.openingTime,
+          closingTime: time.closingTime,
           location: {
             latitude: Number(location.latitude),
             longitude: Number(location.longitude),
           },
           category,
           description,
+          coverImage: coverImage[0],
         },
       });
 
@@ -176,6 +179,15 @@ export default function CreateCompanyForm({ categoryDropdown }: Props) {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           className="_input mt-1"
+        />
+      </div>
+
+      <div className="mt-8">
+        <label className="_label mb-2">Add the cover image</label>
+        <ImageUploader
+          images={coverImage}
+          setImages={setCoverImage}
+          maxImages={1}
         />
       </div>
 

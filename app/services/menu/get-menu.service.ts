@@ -19,6 +19,10 @@ export async function getMenuDetailsApi({ params, ...others }: Props) {
       "Content-Type": "application/json",
     },
     ...others,
+    next: {
+      cache: "no-store",
+      tags: ["menu", `menu-details-${params.menuId}`],
+    },
   });
 
   return response;

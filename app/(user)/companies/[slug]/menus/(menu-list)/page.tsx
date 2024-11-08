@@ -1,10 +1,10 @@
-import { getCompanyDetailsApi } from "@/app/services/company/get-company.service";
-import AppLayout from "@/app/components/layouts/app-layout";
-import ContainerLayout from "@/app/components/layouts/container-layout";
-import Footer from "@/app/components/layouts/footer";
-import PublicHeader from "@/app/components/layouts/public-header";
-import MenuList from "./container/menu-list";
 import { redirect } from "next/navigation";
+import PublicHeader from "@/app/components/layouts/public-header";
+import Footer from "@/app/components/layouts/footer";
+import ContainerLayout from "@/app/components/layouts/container-layout";
+import AppLayout from "@/app/components/layouts/app-layout";
+import MenuList from "./container/menu-list";
+import { getCompanyDetailsApi } from "@/app/services/company/get-company.service";
 
 async function loadData(companyId: string) {
   const companyDetails = async () =>

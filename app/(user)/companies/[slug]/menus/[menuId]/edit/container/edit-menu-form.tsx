@@ -1,21 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import cn from "@/app/utils/class-names";
-import { createMenuApi } from "@/app/services/menu/create-menu.service";
 import ImageUploader from "@/app/components/ui/image-uploader";
 import { updateMenuApi } from "@/app/services/menu/update-menu.service";
+import { revalidateTagInServerComponent } from "@/app/services/revalidation-cache/revalidate-sever-component-cache";
 
 type Props = { className?: string; companyId: string; menu: TMenuDetails };
 
 export default function EditMenuForm({ className, companyId, menu }: Props) {
+  const router = useRouter();
+
   const [images, setImages] = useState<any[]>([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState<number>(0);
   const [tag, setTag] = useState("NEW");
   const [description, setDescription] = useState("");
-
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -28,7 +30,6 @@ export default function EditMenuForm({ className, companyId, menu }: Props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     setIsLoading(true);
 
     try {
@@ -37,9 +38,13 @@ export default function EditMenuForm({ className, companyId, menu }: Props) {
         params: { menuId: menu._id },
       });
 
-      console.log(response);
+      await revalidateTagInServerComponent({
+        tags: ["menu"],
+      });
 
       toast.success(response.message);
+      router.push(`/companies/${companyId}/menus`);
+      router.refresh();
     } catch (e: any) {
       toast.error(e.message);
     }
@@ -120,10 +125,10 @@ export default function EditMenuForm({ className, companyId, menu }: Props) {
       <div className="mt-12 flex justify-end">
         <button
           disabled={isLoading}
-          className="_btn _primary-btn"
+          className="_btn _secondary-dark-outline-btn"
           type="submit"
         >
-          Update
+          {isLoading ? "Updating..." : "Update"}
         </button>
       </div>
     </form>

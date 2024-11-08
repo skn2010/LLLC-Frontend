@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { RiEyeFill } from "react-icons/ri";
+import { BiSolidMessageSquareEdit } from "react-icons/bi";
 
 type Props = {
   companyId: string;
@@ -42,9 +43,16 @@ export default function MenuTable({ menus, companyId }: Props) {
                 <td className="px-2 py-4">{menu.tag}</td>
                 <td className="px-2 py-4">{menu?.price || "Not Mentioned"}</td>
                 <td className="px-2 py-4">{menu.created_date.split("T")[0]}</td>
-                <td className="px-2 py-4">
+                <td className="px-2 py-4 flex gap-3">
                   <Link href={`/companies/${companyId}/menus/${menu._id}`}>
                     <RiEyeFill size={18} title="View menu details" />
+                  </Link>
+
+                  <Link href={`/companies/${companyId}/menus/${menu._id}/edit`}>
+                    <BiSolidMessageSquareEdit
+                      size={18}
+                      title="Edit menu details"
+                    />
                   </Link>
                 </td>
               </tr>

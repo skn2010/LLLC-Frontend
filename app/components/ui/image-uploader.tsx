@@ -11,7 +11,7 @@ type Props = {
   maxImages: number;
 };
 
-export default function ImageUpload({ images, setImages, maxImages }: Props) {
+export default function ImageUploader({ images, setImages, maxImages }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleButtonClick = () => {

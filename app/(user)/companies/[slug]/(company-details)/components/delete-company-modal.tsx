@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Modal from "@/app/components/ui/modal";
-import { deleteCompanyApi } from "@/app/services/company/delete-company.service";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import Modal from "@/app/components/ui/modal";
+import { deleteCompanyApi } from "@/app/services/company/delete-company.service";
 
 type Props = {
   isOpen: boolean;
@@ -66,13 +66,11 @@ export default function DeleteCompanyModal({
     >
       <form onSubmit={handleSubmit}>
         <div className="mt-4">
-          <p className="_label text-red-600">
-            Following the successful deletion of your company details, the
-            information will be retained for a period of one year for security
-            purposes. After this period, it will be automatically removed from
-            our database.
+          <p className="text-sm text-red-500 font-medium">
+            After deleting your company details, we'll retain the information
+            for one year for security, then it will be automatically removed.
           </p>
-          <p className="_label mt-2">
+          <p className="text-sm mt-2">
             Enter the company name {`"${companyData.name}"`} to proceed to
             delete operation.
           </p>
@@ -91,7 +89,11 @@ export default function DeleteCompanyModal({
         </div>
 
         <div className="mt-8 flex justify-end gap-x-4">
-          <button className="_btn" type="button">
+          <button
+            className="_btn"
+            type="button"
+            onClick={() => setIsOpen(false)}
+          >
             Cancel
           </button>
           <button className="_btn bg-red-600 text-white" type="submit">

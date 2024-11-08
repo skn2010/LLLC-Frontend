@@ -11,10 +11,6 @@ async function loadData(menuId: string): Promise<[TMenuDetails | null]> {
   const menuDetails = async () =>
     getMenuDetailsApi({
       params: { menuId },
-      next: {
-        cache: "no-store",
-        tags: ["menu", `menu-details-${menuId}`],
-      },
     });
 
   try {

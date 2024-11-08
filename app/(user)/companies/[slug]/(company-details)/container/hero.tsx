@@ -10,7 +10,7 @@ type Props = {
 export default function Hero({ companyDetails, className }: Props) {
   return (
     <section
-      style={{ backgroundImage: `url(${"/hero.png"})` }}
+      style={{ backgroundImage: `url(${companyDetails.cover_image?.url})` }}
       className={cn(
         className,
         "h-[80dvh] lg:h-[50dvh] flex items-end bg-no-repeat bg-cover bg-center"

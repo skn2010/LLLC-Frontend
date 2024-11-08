@@ -25,13 +25,19 @@ export async function updateMenuApi({ payload, params }: Props) {
   formData.append("tag", payload.tag);
   formData.append("description", payload.description);
 
+  const unchangedImages: TImage[] = [];
+
   payload.images.forEach((image) => {
     if (typeof image === "object" && image.url) {
-      formData.append("images", JSON.stringify(image));
+      unchangedImages.push(image);
     } else {
       formData.append("images", image);
     }
   });
+
+  if (unchangedImages.length) {
+    formData.append("images", JSON.stringify(unchangedImages));
+  }
 
   const menuResponse: Response = await http(`/menus/${params.menuId}`, {
     method: "PATCH",

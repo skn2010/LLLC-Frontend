@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import ImageUploader from "@/app/components/ui/image-uploader";
 import cn from "@/app/utils/class-names";
 import { createMenuApi } from "@/app/services/menu/create-menu.service";
@@ -9,6 +10,8 @@ import { toast } from "react-toastify";
 type Props = { className?: string; companyId: string };
 
 export default function CreateMenuForm({ className, companyId }: Props) {
+  const router = useRouter();
+
   const [images, setImages] = useState<any[]>([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState<number>(0);
@@ -29,6 +32,7 @@ export default function CreateMenuForm({ className, companyId }: Props) {
       });
 
       toast.success(response.message);
+      router.back();
     } catch (e: any) {
       toast.error(e.message);
     }

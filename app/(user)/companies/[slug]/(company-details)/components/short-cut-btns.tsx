@@ -40,6 +40,7 @@ export default function ShortCutBtns({
           <LuBadgeAlert size={20} />
           <span>Follow</span>
         </button>
+
         {isUserOwnerOfCompany ? (
           <>
             <Link

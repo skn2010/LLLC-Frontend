@@ -15,10 +15,6 @@ async function loadData(companyId: string) {
   const companyDetails = async () =>
     getCompanyDetailsApi({
       params: { companyId },
-      next: {
-        cache: "no-store",
-        tags: ["company", `company-details-${companyId}`],
-      },
     });
 
   try {
@@ -26,7 +22,6 @@ async function loadData(companyId: string) {
     return [companyData];
   } catch (e) {
     console.log(`Error on companies/${companyId}`);
-    console.log(e);
     return [null];
   }
 }

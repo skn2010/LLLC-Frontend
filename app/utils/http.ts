@@ -31,13 +31,14 @@ async function getToken() {
 type Props = {
   includeAuth?: boolean;
   token?: string;
+  next?: any;
 } & RequestInit;
 
 /**
  * Function for the external API calls
  */
 export default async function http(url: string, props?: Props) {
-  const { includeAuth = true, token, ...options } = props || {};
+  const { includeAuth = true, token, next, ...options } = props || {};
 
   let authToken: string | null = null;
 
@@ -58,7 +59,7 @@ export default async function http(url: string, props?: Props) {
 
   const request = await fetch(
     normalizeURL(process.env.NEXT_PUBLIC_BACKEND_URL || "", url),
-    requestObject
+    { ...requestObject, next: next || {} }
   );
 
   const response = await request.json();

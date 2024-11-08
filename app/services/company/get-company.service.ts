@@ -18,6 +18,10 @@ export async function getCompanyDetailsApi({ params, ...others }: Props) {
     headers: {
       "Content-Type": "application/json",
     },
+    next: {
+      cache: "no-store",
+      tags: ["company", `company-details-${params.companyId}`],
+    },
     ...others,
   });
 

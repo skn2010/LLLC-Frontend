@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import cn from "@/app/utils/class-names";
 import getUserDataFromServer from "@/app/utils/get-user-data-from-server";
 import { getSingleUserData } from "@/app/services/user/get-single-user.service";
@@ -9,14 +10,13 @@ import TotalReviewStatistics from "../components/total-review-statistics";
 import ReviewDistribution from "../components/review-distribution";
 import CompanyList from "../components/company-list";
 import { getUsersCompanyList } from "@/app/services/company/get-user-company-list.service";
-import Link from "next/link";
 
 async function loadData(userId: string, token: string) {
   const userDetails = async () => {
     const userData = await getSingleUserData({
       id: userId,
       token,
-      next: { cache: "no-store" },
+      next: { cache: "no-store", tags: ["user-details"] },
     });
 
     return userData;
