@@ -13,7 +13,7 @@ export default function Hero({ companyDetails, className }: Props) {
       style={{ backgroundImage: `url(${companyDetails.cover_image?.url})` }}
       className={cn(
         className,
-        "h-[80dvh] lg:h-[50dvh] flex items-end bg-no-repeat bg-cover bg-center"
+        "h-[80dvh] lg:h-[50dvh] flex items-end bg-no-repeat bg-cover bg-center bg-black"
       )}
     >
       <div className="_app-layout text-white">

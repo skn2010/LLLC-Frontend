@@ -8,7 +8,7 @@ type Props = {
 };
 
 type ResponseData = {
-  data: TCompany;
+  data: TCompanyDetails;
 };
 
 export async function getCompanyDetailsApi({ params, ...others }: Props) {

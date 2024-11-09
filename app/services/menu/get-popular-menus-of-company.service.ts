@@ -4,12 +4,6 @@ type Props = {
   params: {
     companyId: string;
   };
-  queries: {
-    page: number;
-    pageSize: number;
-  };
-
-  [key: string]: unknown;
 };
 
 type Response = {
@@ -20,13 +14,12 @@ type Response = {
   totalPages: number;
 };
 
-export async function getMenusOfCompanyApi({
+export default async function getPopularMenusOfCompanyApi({
   params,
-  queries,
   ...others
 }: Props) {
   const response: Response = await http(
-    `menus/of-company/${params.companyId}?page=${queries.page}&pageSize=${queries.pageSize}`,
+    `/menus/popular/of-company/${params.companyId}`,
     {
       method: "GET",
       includeAuth: false,
@@ -36,7 +29,7 @@ export async function getMenusOfCompanyApi({
       ...others,
       next: {
         cache: "no-store",
-        tags: ["company-menus", `menus-of-${params.companyId}`],
+        tags: ["company-popular-menus", `popular-menus-of-${params.companyId}`],
       },
     }
   );

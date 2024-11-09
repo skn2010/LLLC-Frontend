@@ -7,10 +7,15 @@ import MenuCard from "../components/menu-card";
 
 type Props = {
   companyId: string;
+  menus: TMenu[];
   className?: string;
 };
 
-export default function MenuList({ companyId, className }: Props) {
+export default function MenuList({ menus, companyId, className }: Props) {
+  if (!menus.length) {
+    return null;
+  }
+
   return (
     <div className={cn(className, "")}>
       <h3 className="text-[16px] md:text-[20px] lg:text-[24px] font-bold text-gray-700">
@@ -28,24 +33,14 @@ export default function MenuList({ companyId, className }: Props) {
       </div>
 
       <div className="mt-6 _hide-scrollbar flex gap-x-6 overflow-auto">
-        <div className="flex-none w-[80%] sm:w-1/2 lg:w-1/3">
-          <MenuCard />
-        </div>
-        <div className="flex-none w-[80%] sm:w-1/2 lg:w-1/3">
-          <MenuCard />
-        </div>
-        <div className="flex-none w-[80%] sm:w-1/2 lg:w-1/3">
-          <MenuCard />
-        </div>
-        <div className="flex-none w-[80%] sm:w-1/2 lg:w-1/3">
-          <MenuCard />
-        </div>
-        <div className="flex-none w-[80%] sm:w-1/2 lg:w-1/3">
-          <MenuCard />
-        </div>
-        <div className="flex-none w-[80%] sm:w-1/2 lg:w-1/3">
-          <MenuCard />
-        </div>
+        {menus.map((item, index) => (
+          <div
+            key={index + "-menu"}
+            className="flex-none w-[80%] sm:w-1/2 lg:w-1/3"
+          >
+            <MenuCard menu={item} companyId={companyId} />
+          </div>
+        ))}
       </div>
     </div>
   );

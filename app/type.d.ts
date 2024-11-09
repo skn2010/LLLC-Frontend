@@ -56,6 +56,28 @@ type TCompany = {
   created_date: string;
 };
 
+type TCompanyDetails = {
+  _id: string;
+  name: string;
+  email: string;
+  opening_time: string;
+  closing_time: string;
+  description: string;
+  contact_number: string;
+  is_deleted: boolean;
+  cover_image: {
+    url: string;
+    fileId: string;
+    fileName: string;
+    contentType: string;
+  } | null;
+  location: { latitude: number | string; longitude: number | string };
+  category: string | TCategory | null;
+  created_by: TUser;
+  updated_date: string | null;
+  created_date: string;
+};
+
 type TMenu = {
   _id: string;
   name: string;
