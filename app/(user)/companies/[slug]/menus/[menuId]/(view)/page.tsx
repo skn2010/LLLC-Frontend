@@ -6,6 +6,7 @@ import PublicHeader from "@/app/components/layouts/public-header";
 import ImageSlider from "./container/image-slider";
 import MenuInfo from "./container/menu-info";
 import { getMenuDetailsApi } from "@/app/services/menu/get-menu.service";
+import ReviewList from "./container/review-list";
 
 async function loadData(menuId: string): Promise<[TMenuDetails | null]> {
   const menuDetails = async () =>
@@ -26,7 +27,7 @@ async function loadData(menuId: string): Promise<[TMenuDetails | null]> {
 export default async function ViewMenu({
   params,
 }: {
-  params: { menuId: string };
+  params: { menuId: string; slug: string };
 }) {
   const [menuData] = await loadData(params.menuId);
 
@@ -41,6 +42,11 @@ export default async function ViewMenu({
         <ContainerLayout>
           <ImageSlider images={menuData.images.map((item) => item.url)} />
           <MenuInfo menu={menuData} className="mt-8" />
+          <ReviewList
+            companyId={params.slug}
+            menuId={params.menuId}
+            className="mt-12"
+          />
         </ContainerLayout>
       </AppLayout>
       <Footer />

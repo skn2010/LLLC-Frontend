@@ -105,3 +105,20 @@ type TMenuDetails = {
   created_date: string;
   updated_date: string;
 };
+
+type TReview = {
+  _id: string;
+  review_by: TUser;
+  company: TCompany;
+  menu: string;
+  images: TImage[];
+  review: string;
+  rating_star: number;
+  is_deleted: boolean;
+  created_date: string;
+  totalReactions: number;
+  heartReactions: number;
+  sadReactions: number;
+  loveReactions: number;
+  angryReactions: number;
+};

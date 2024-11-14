@@ -44,9 +44,9 @@ export default function ImageSlider({ images }: ImageSliderProps) {
     <div className="grid grid-cols-12 gap-4">
       <div
         ref={imageContainerRef}
-        className="relative w-full overflow-hidden col-span-12 lg:col-span-9"
+        className="relative w-full overflow-hidden col-span-12 lg:col-span-8"
       >
-        <div className="relative aspect-video">
+        <div className="relative aspect-[16/10]">
           {images.map((image, index) => (
             <div
               key={index}
@@ -90,7 +90,7 @@ export default function ImageSlider({ images }: ImageSliderProps) {
 
       <div
         style={{ height: `${containerHeight}px` }}
-        className="hidden lg:block lg:col-span-3 overflow-scroll"
+        className="hidden lg:block lg:col-span-4 overflow-scroll"
       >
         <div className="grid grid-cols-1 gap-4">
           {images.map((image, i) => (
@@ -100,7 +100,7 @@ export default function ImageSlider({ images }: ImageSliderProps) {
               height={300}
               src={image}
               alt="menu image"
-              className="w-full aspect-video rounded"
+              className="w-full aspect-[16/10] rounded"
             />
           ))}
         </div>
