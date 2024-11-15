@@ -4,7 +4,6 @@ import cn from "@/app/utils/class-names";
 import getUserDataFromServer from "@/app/utils/get-user-data-from-server";
 import { getSingleUserData } from "@/app/services/user/get-single-user.service";
 
-import ReviewDetailsCard from "@/app/components/review-details-card";
 import ProfileCard from "../components/profile-card";
 import TotalReviewStatistics from "../components/total-review-statistics";
 import ReviewDistribution from "../components/review-distribution";
@@ -90,17 +89,6 @@ export default async function ProfileSection({ className }: Props) {
             <p className="text-sm font-semibold text-gray-700">Joined since</p>
             <p className="mt-1 text-sm text-gray-700">2020-11-12</p>
           </div>
-        </div>
-
-        <h4 className="mt-10 text-[16px] md:text-[20px] lg:text-[24px] font-bold text-gray-700">
-          Reviews
-        </h4>
-
-        <div className="mt-8 grid gap-y-16">
-          <ReviewDetailsCard />
-          <ReviewDetailsCard />
-          <ReviewDetailsCard />
-          <ReviewDetailsCard />
         </div>
       </div>
     </div>

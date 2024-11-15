@@ -34,6 +34,12 @@ type TCategory = {
   created_date: string;
 };
 
+type TCompanyReviewStats = {
+  totalReviews: number;
+  averageRating: number;
+  totalRatingStars: number;
+};
+
 type TCompany = {
   _id: string;
   name: string;
@@ -119,6 +125,7 @@ type TReview = {
   totalReactions: number;
   heartReactions: number;
   sadReactions: number;
-  loveReactions: number;
+  likeReactions: number;
   angryReactions: number;
+  reacted_type_by_user: string;
 };

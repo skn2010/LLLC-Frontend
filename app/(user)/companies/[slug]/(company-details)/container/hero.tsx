@@ -5,9 +5,14 @@ import RatingStar from "@/app/components/rating-star";
 type Props = {
   className?: string;
   companyDetails: TCompany;
+  reviewStats: TCompanyReviewStats;
 };
 
-export default function Hero({ companyDetails, className }: Props) {
+export default function Hero({
+  companyDetails,
+  reviewStats,
+  className,
+}: Props) {
   return (
     <section
       style={{ backgroundImage: `url(${companyDetails.cover_image?.url})` }}
@@ -23,8 +28,12 @@ export default function Hero({ companyDetails, className }: Props) {
           </h1>
 
           <div className="mt-4 flex flex-wrap items-center gap-4">
-            <RatingStar rating={4} />
-            <p className="text-sm font-semibold">4.5 (1,300 reviews)</p>
+            <RatingStar
+              rating={reviewStats.averageRating as 1 | 2 | 3 | 4 | 5}
+            />
+            <p className="text-sm font-semibold">
+              {reviewStats.averageRating} ({reviewStats.totalReviews} reviews)
+            </p>
           </div>
 
           <div className="mt-4">

@@ -4,8 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import cn from "@/app/utils/class-names";
 import { IoMdStarOutline } from "react-icons/io";
-import { HiSaveAs } from "react-icons/hi";
-import { LuBadgeAlert } from "react-icons/lu";
 import { TbUserEdit } from "react-icons/tb";
 import { MdDeleteOutline } from "react-icons/md";
 import DeleteCompanyModal from "./delete-company-modal";
@@ -35,11 +33,6 @@ export default function ShortCutBtns({
             <span>Write a review</span>
           </button>
         ) : null}
-
-        <button className="_btn border border-gray-400 flex items-center gap-x-2">
-          <LuBadgeAlert size={20} />
-          <span>Follow</span>
-        </button>
 
         {isUserOwnerOfCompany ? (
           <>

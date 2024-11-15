@@ -5,8 +5,9 @@ import Footer from "@/app/components/layouts/footer";
 import PublicHeader from "@/app/components/layouts/public-header";
 import ImageSlider from "./container/image-slider";
 import MenuInfo from "./container/menu-info";
-import { getMenuDetailsApi } from "@/app/services/menu/get-menu.service";
 import ReviewList from "./container/review-list";
+import { getMenuDetailsApi } from "@/app/services/menu/get-menu.service";
+import getUserDataFromServer from "@/app/utils/get-user-data-from-server";
 
 async function loadData(menuId: string): Promise<[TMenuDetails | null]> {
   const menuDetails = async () =>
@@ -30,6 +31,7 @@ export default async function ViewMenu({
   params: { menuId: string; slug: string };
 }) {
   const [menuData] = await loadData(params.menuId);
+  const { user } = getUserDataFromServer();
 
   if (!menuData) {
     redirect("/");
@@ -45,6 +47,7 @@ export default async function ViewMenu({
           <ReviewList
             companyId={params.slug}
             menuId={params.menuId}
+            user={user}
             className="mt-12"
           />
         </ContainerLayout>

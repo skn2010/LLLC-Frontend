@@ -9,8 +9,8 @@ type Props = {
 
 type ResponseData = {
   data: TCompanyDetails;
+  reviewStats: TCompanyReviewStats;
 };
-
 export async function getCompanyDetailsApi({ params, ...others }: Props) {
   const response: ResponseData = await http(`/companies/${params.companyId}`, {
     method: "GET",

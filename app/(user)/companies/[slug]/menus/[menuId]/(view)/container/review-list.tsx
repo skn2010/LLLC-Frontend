@@ -6,40 +6,42 @@ import { toast } from "react-toastify";
 import cn from "@/app/utils/class-names";
 import ReviewCard from "@/app/components/review-card";
 import { getReviewsOfMenu } from "@/app/services/review/get-reviews-of-menu.service";
+import Pagination from "@/app/components/ui/pagination";
 
 type Props = {
   companyId: string;
   menuId: string;
+  user: TUser | null;
   className?: string;
 };
 
-export default function ReviewList({ companyId, menuId, className }: Props) {
+export default function ReviewList({
+  companyId,
+  menuId,
+  user,
+  className,
+}: Props) {
   const [page, setPage] = useState(1);
   const [reviews, setReviews] = useState<TReview[]>([]);
   const [totalPages, setTotalPages] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const loadData = async () => {
+    try {
+      const response = await getReviewsOfMenu({
+        params: { menuId },
+        queries: { page, pageSize: 12 },
+      });
+
+      setReviews(response.data);
+      setTotalPages(response.totalPages);
+    } catch (e: any) {
+      toast.error(e.message);
+    }
+  };
 
   useEffect(() => {
-    const loadData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await getReviewsOfMenu({
-          params: { menuId },
-          queries: { page, pageSize: 12 },
-        });
-
-        setReviews((prev) => [...prev, ...response.data]);
-        setTotalPages(response.totalPages);
-      } catch (e: any) {
-        toast.error(e.message);
-      }
-      setIsLoading(false);
-    };
-
     loadData();
   }, [page]);
-
-  console.log(reviews);
 
   return (
     <section className={cn(className, "")}>
@@ -63,48 +65,22 @@ export default function ReviewList({ companyId, menuId, className }: Props) {
           </div>
 
           {reviews.map((review, i) => (
-            <ReviewCard key={`review-${i}`} review={review} className="mt-8" />
+            <ReviewCard
+              key={`review-${i}`}
+              review={review}
+              user={user}
+              reloadData={loadData}
+              className="mt-8"
+            />
           ))}
 
           {page > totalPages || !reviews.length ? null : (
-            <div className="mt-12 flex justify-center">
-              <button
-                onClick={() => {
-                  if (!isLoading) {
-                    setPage((page) => page + 1);
-                  }
-                }}
-                type="button"
-                className="_btn _primary-btn w-[130px] flex items-center justify-center"
-              >
-                {isLoading ? (
-                  <span className="flex items-center">
-                    <svg
-                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        stroke-width="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    Loading...
-                  </span>
-                ) : (
-                  "Load more"
-                )}
-              </button>
+            <div className="mt-8 flex justify-end">
+              <Pagination
+                currentPage={page}
+                setCurrentPage={setPage}
+                totalPages={totalPages}
+              />
             </div>
           )}
         </div>

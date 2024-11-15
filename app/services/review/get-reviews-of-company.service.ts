@@ -2,7 +2,7 @@ import http from "@/app/utils/http";
 
 type Props = {
   params: {
-    menuId: string;
+    companyId: string;
   };
   queries: {
     page: number;
@@ -20,9 +20,13 @@ type Response = {
   totalPages: number;
 };
 
-export async function getReviewsOfMenu({ params, queries, ...others }: Props) {
+export async function getReviewsOfCompanyApi({
+  params,
+  queries,
+  ...others
+}: Props) {
   const response: Response = await http(
-    `reviews/of-menu/${params.menuId}?page=${queries.page}&pageSize=${queries.pageSize}`,
+    `reviews/of-company/${params.companyId}?page=${queries.page}&pageSize=${queries.pageSize}`,
     {
       method: "GET",
       includeAuth: true,
@@ -32,7 +36,7 @@ export async function getReviewsOfMenu({ params, queries, ...others }: Props) {
       ...others,
       next: {
         cache: "no-store",
-        tags: ["menu-reviews", `reviews-of-${params.menuId}`],
+        tags: ["menu-reviews", `reviews-of-${params.companyId}`],
       },
     }
   );

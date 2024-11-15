@@ -1,3 +1,5 @@
+"use client";
+
 import { MdStarBorder } from "react-icons/md";
 import cn from "../utils/class-names";
 

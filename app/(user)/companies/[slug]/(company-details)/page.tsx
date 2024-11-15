@@ -13,9 +13,14 @@ import { getCompanyDetailsApi } from "@/app/services/company/get-company.service
 import getPopularMenusOfCompanyApi from "@/app/services/menu/get-popular-menus-of-company.service";
 import getUserDataFromServer from "@/app/utils/get-user-data-from-server";
 
+type TCompanyDetailsWithStats = {
+  data: TCompanyDetails;
+  reviewStats: TCompanyReviewStats;
+};
+
 async function loadData(
   companyId: string
-): Promise<[TCompanyDetails | null, TMenu[] | null]> {
+): Promise<[TCompanyDetailsWithStats | null, TMenu[] | null]> {
   const companyDetails = async () =>
     getCompanyDetailsApi({ params: { companyId } });
 
@@ -27,7 +32,7 @@ async function loadData(
       companyDetails(),
       popularMenus(),
     ]);
-    return [companyData.data, popularMenuData.data];
+    return [companyData, popularMenuData.data];
   } catch (e) {
     console.log(`Error on companies/${companyId}`);
     return [null, null];
@@ -43,7 +48,7 @@ export default async function CompanyDetails({
   const [companyData, popularMenuData] = await (async () =>
     loadData(params.slug))();
 
-  if (!companyData) {
+  if (!companyData?.data) {
     redirect("/");
   }
 
@@ -51,31 +56,38 @@ export default async function CompanyDetails({
     <>
       <PublicHeader headerType="dark" />
       <main className="pb-10">
-        <Hero companyDetails={companyData} />
+        <Hero
+          companyDetails={companyData.data}
+          reviewStats={companyData.reviewStats}
+        />
         <div className="_app-layout">
           <div className="_container-layout flex flex-col md:flex-row gap-x-8 gap-y-12 overflow-hidden">
-            <div id="leftContainer" className="s">
+            <div className="w-full">
               <ShortCutBtns
                 isUserOwnerOfCompany={
-                  (companyData.created_by as TUser)._id === user._id
+                  (companyData.data.created_by as TUser)._id === user._id
                 }
                 companyId={params.slug}
-                companyName={companyData.name}
+                companyName={companyData.data.name}
                 className="mt-10"
               />
               <hr className="my-10" />
-              <AboutCompany companyDescription={companyData.description} />
+              <AboutCompany companyDescription={companyData.data.description} />
               <MenuList
                 companyId={params.slug}
                 className="mt-10"
                 menus={popularMenuData || []}
               />
-              <ReviewList className="mt-10" />
+              <ReviewList
+                className="mt-10"
+                companyId={params.slug}
+                user={user || null}
+              />
             </div>
             <div className="mt-10 w-full md:max-w-[350px]">
-              <CompanyProfileDetails companyDetails={companyData} />
+              <CompanyProfileDetails companyDetails={companyData.data} />
               <CompanyLocation
-                location={companyData.location}
+                location={companyData.data.location}
                 className="mt-10"
               />
             </div>
