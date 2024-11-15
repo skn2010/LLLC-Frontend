@@ -9,6 +9,7 @@ import TotalReviewStatistics from "../components/total-review-statistics";
 import ReviewDistribution from "../components/review-distribution";
 import CompanyList from "../components/company-list";
 import { getUsersCompanyList } from "@/app/services/company/get-user-company-list.service";
+import { getUserStatisticsApi } from "@/app/services/user/get-user-statistics.service";
 
 async function loadData(userId: string, token: string) {
   const userDetails = async () => {
@@ -31,13 +32,17 @@ async function loadData(userId: string, token: string) {
     return response;
   };
 
+  const getUserStats = async () =>
+    await getUserStatisticsApi({ id: userId, token });
+
   try {
-    const [userData, companyListData] = await Promise.all([
+    const [userData, companyListData, userStatistics] = await Promise.all([
       userDetails(),
       companiesList(),
+      getUserStats(),
     ]);
 
-    return [userData, companyListData];
+    return [userData, companyListData, userStatistics];
   } catch (e) {
     console.log("Error: data fetching on profile section (/profile)");
     console.log(e);
@@ -50,7 +55,10 @@ type Props = {
 };
 export default async function ProfileSection({ className }: Props) {
   const { token, user } = getUserDataFromServer();
-  const [userData, companyListData] = await loadData(user._id, token || "");
+  const [userData, companyListData, userStatistics] = await loadData(
+    user._id,
+    token || ""
+  );
 
   if (!userData) {
     redirect("/login");
@@ -75,8 +83,13 @@ export default async function ProfileSection({ className }: Props) {
       </div>
 
       <div className="grow">
-        <TotalReviewStatistics />
-        <ReviewDistribution className="mt-10" />
+        <TotalReviewStatistics
+          reaction={(userStatistics?.data as any).reaction}
+        />
+        <ReviewDistribution
+          reaction={(userStatistics?.data as any).reaction}
+          className="mt-10"
+        />
         <h4 className="mt-10 text-[16px] md:text-[20px] lg:text-[24px] font-bold text-gray-700">
           More about me
         </h4>
