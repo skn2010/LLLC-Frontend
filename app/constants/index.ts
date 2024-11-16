@@ -1,7 +1,7 @@
 export const publicNavList: PublicNav[] = [
   {
     name: "Write a Review",
-    link: "/write-review",
+    link: "/companies",
   },
   { name: "About Us", link: "/about-us" },
 ];

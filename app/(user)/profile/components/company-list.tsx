@@ -19,7 +19,7 @@ export default function CompanyList({ companyList, className }: Props) {
         >
           <figure>
             <Image
-              src={"/hero.png"}
+              src={item.cover_image?.url || ""}
               alt="profile-img"
               width={80}
               height={80}

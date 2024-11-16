@@ -2,23 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import cn from "@/app/utils/class-names";
-import MenuCard from "../components/menu-card";
-import { getMenusOfCompanyApi } from "@/app/services/menu/get-menus-of-company.service";
+import CategoryCard from "@/app/(user)/(home)/components/category-card";
+import { getCategoriesApi } from "@/app/services/category/get-categories.service";
 
-type Props = {
-  companyId: string;
-  companyName: string;
-  className?: string;
-};
-
-export default function MenuGrid({
-  companyId,
-  companyName,
-  className = "",
-}: Props) {
+export default function CategoryList() {
   const [page, setPage] = useState(1);
-  const [menus, setMenus] = useState<TMenu[]>([]);
+  const [categories, setCategories] = useState<TCategory[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,12 +15,11 @@ export default function MenuGrid({
     const loadData = async () => {
       setIsLoading(true);
       try {
-        const response = await getMenusOfCompanyApi({
-          params: { companyId },
+        const response = await getCategoriesApi({
           queries: { page, pageSize: 16 },
         });
 
-        setMenus((prev) => [...prev, ...response.data]);
+        setCategories((prev) => [...prev, ...response.data]);
         setTotalPages(response.totalPages);
       } catch (e: any) {
         toast.error(e.message);
@@ -40,22 +28,23 @@ export default function MenuGrid({
     };
 
     loadData();
-  }, [page, companyId]);
+  }, [page]);
 
   return (
-    <div className={cn(className, "")}>
+    <section>
       <div>
         <h3 className="text-[16px] md:text-[20px] lg:text-[24px] font-bold text-gray-700">
-          Menus of {companyName}
+          Category List
         </h3>
-        <p className="mt-1 text-sm font-semibold text-gray-600">
-          View all the menus
+        <p className="mt-2 text-sm font-semibold max-w-[500px] text-gray-700">
+          Click one to see all the companies list that are related to this
+          category.
         </p>
       </div>
 
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {menus.map((item, index) => (
-          <MenuCard menu={item} key={index + "-menu"} companyId={companyId} />
+      <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
+        {categories.map((item, i) => (
+          <CategoryCard key={`categories-${i}`} category={item} />
         ))}
       </div>
 
@@ -68,7 +57,7 @@ export default function MenuGrid({
               }
             }}
             type="button"
-            className="_btn _primary-btn w-[180px] flex items-center justify-center"
+            className="_btn w-[180px] flex items-center justify-center border border-gray-600 text-gray-700"
           >
             {isLoading ? (
               <span className="flex items-center">
@@ -100,6 +89,6 @@ export default function MenuGrid({
           </button>
         </div>
       )}
-    </div>
+    </section>
   );
 }

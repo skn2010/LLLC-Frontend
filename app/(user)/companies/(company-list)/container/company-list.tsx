@@ -2,60 +2,68 @@
 
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import cn from "@/app/utils/class-names";
-import MenuCard from "../components/menu-card";
-import { getMenusOfCompanyApi } from "@/app/services/menu/get-menus-of-company.service";
+import getCompaniesApi from "@/app/services/company/get-company-list.service";
+import CompanyCard from "@/app/components/company-card";
 
 type Props = {
-  companyId: string;
-  companyName: string;
-  className?: string;
+  categoryId?: string;
+  companyName?: string;
 };
 
-export default function MenuGrid({
-  companyId,
-  companyName,
-  className = "",
-}: Props) {
+export default function CompanyList({ categoryId, companyName }: Props) {
   const [page, setPage] = useState(1);
-  const [menus, setMenus] = useState<TMenu[]>([]);
+  const [companies, setCompanies] = useState<TCompany[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const loadData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await getMenusOfCompanyApi({
-          params: { companyId },
-          queries: { page, pageSize: 16 },
-        });
+  const loadData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await getCompaniesApi({
+        queries: { page, categoryId, companyName },
+      });
 
-        setMenus((prev) => [...prev, ...response.data]);
-        setTotalPages(response.totalPages);
-      } catch (e: any) {
-        toast.error(e.message);
+      if (page === 1) {
+        setCompanies(response.data);
+      } else {
+        setCompanies((prev) => [...prev, ...response.data]);
       }
-      setIsLoading(false);
-    };
 
+      setTotalPages(response.totalPages);
+    } catch (e: any) {
+      toast.error(e.message);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
     loadData();
-  }, [page, companyId]);
+  }, [page]);
+
+  // When the user is the current page (/companies) and if he/she searches something, the page should re-load new data based
+  // the search input text
+  useEffect(() => {
+    if (page === 1) {
+      loadData();
+    } else {
+      setPage(1);
+    }
+  }, [categoryId, companyName]);
 
   return (
-    <div className={cn(className, "")}>
+    <section>
       <div>
         <h3 className="text-[16px] md:text-[20px] lg:text-[24px] font-bold text-gray-700">
-          Menus of {companyName}
+          Company List
         </h3>
-        <p className="mt-1 text-sm font-semibold text-gray-600">
-          View all the menus
+        <p className="mt-2 text-sm font-semibold max-w-[500px] text-gray-700">
+          Click one to see all the reviews and add a review to this company.
         </p>
       </div>
 
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {menus.map((item, index) => (
-          <MenuCard menu={item} key={index + "-menu"} companyId={companyId} />
+      <div className="mt-8 grid grid-cols-1 sm: grid-cols-2 md:grid-cols-3 gap-8">
+        {companies.map((company, i) => (
+          <CompanyCard key={`company-${i}`} company={company} />
         ))}
       </div>
 
@@ -68,7 +76,7 @@ export default function MenuGrid({
               }
             }}
             type="button"
-            className="_btn _primary-btn w-[180px] flex items-center justify-center"
+            className="_btn border w-[210px] flex items-center justify-center text-gray-600 border-gray-500"
           >
             {isLoading ? (
               <span className="flex items-center">
@@ -95,11 +103,11 @@ export default function MenuGrid({
                 Loading...
               </span>
             ) : (
-              "Load more menus"
+              "Load more companies"
             )}
           </button>
         </div>
       )}
-    </div>
+    </section>
   );
 }

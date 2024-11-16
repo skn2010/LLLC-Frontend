@@ -1,7 +1,4 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
-import { RiSearch2Line } from "react-icons/ri";
-
 import cn from "@/app/utils/class-names";
 import { publicNavList } from "@/app/constants";
 import Logo from "../ui/logo";
@@ -10,6 +7,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import LoginWithGoogle from "../login-with-google";
 import Image from "next/image";
 import getUserDataFromServer from "@/app/utils/get-user-data-from-server";
+import SearchInput from "../search-input";
 
 type Props = {
   headerType?: "dark" | "light";
@@ -39,18 +37,10 @@ export default function PublicHeader({
         <figure className="flex-none">
           <Logo type={headerType === "light" ? "white" : "black"} />
         </figure>
-        <form className="grow flex justify-end">
-          <div className="w-full max-w-[900px] flex items-center shadow rounded-md overflow-hidden bg-white">
-            <input
-              type="search"
-              placeholder="Search the business you want to view reviews..."
-              className="w-full px-4 py-2 outline-none"
-            />
-            <button type="submit" className="p-2.5 bg-primary">
-              <RiSearch2Line size={28} color="white" />
-            </button>
-          </div>
-        </form>
+        <SearchInput
+          className="grow max-w-[450px] flex justify-end"
+          headerType="dark"
+        />
         <div className="flex-none flex items-center gap-x-8">
           {publicNavList.map((navItem, i) => {
             return (
