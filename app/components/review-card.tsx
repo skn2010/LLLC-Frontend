@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { FaRegHandPeace } from "react-icons/fa6";
@@ -32,6 +33,8 @@ export default function ReviewCard({
   reloadData,
   className,
 }: Props) {
+  const router = useRouter();
+
   const [isReadMoreOpen, setIsReadMoreOpen] = useState(false);
   const [react, setReact] = useState<string | null>(null);
 
@@ -81,12 +84,12 @@ export default function ReviewCard({
       try {
         await removeReactOnReviewApi({ params: { reviewId: review._id } });
         reloadData && reloadData();
+        router.refresh();
       } catch (e: any) {
         toast.error(e.message);
       }
     } else {
       setReact(reactValue);
-      reloadData && reloadData();
 
       try {
         await reactOnReviewApi({
@@ -95,6 +98,7 @@ export default function ReviewCard({
         });
 
         reloadData && reloadData();
+        router.refresh();
       } catch (e: any) {
         toast.error(e.message);
       }

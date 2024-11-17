@@ -19,7 +19,7 @@ export default function CategoryCard({ category, className }: Props) {
       <div>
         <figure className="flex justify-center">
           <Image
-            src={category.image?.url || ""}
+            src={category.image?.url || "/home-hero.jpg"}
             alt=""
             width={48}
             height={48}

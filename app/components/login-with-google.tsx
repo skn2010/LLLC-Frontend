@@ -8,7 +8,7 @@ import cn from "../utils/class-names";
 import login from "../services/auth/login.service";
 
 type Props = {
-  headerType?: "dark" | "light";
+  headerType?: "white" | "primary";
   className?: string;
 };
 
@@ -63,8 +63,8 @@ export default function LoginWithGoogle({ className, headerType }: Props) {
       <Link
         href={"/login"}
         className={cn("_btn", className, {
-          "_secondary-light-outline-btn": headerType === "light",
-          "_secondary-dark-outline-btn": headerType === "dark",
+          "_secondary-light-outline-btn": headerType === "white",
+          "_secondary-dark-outline-btn": headerType === "primary",
         })}
       >
         Login

@@ -10,12 +10,12 @@ import getUserDataFromServer from "@/app/utils/get-user-data-from-server";
 import SearchInput from "../search-input";
 
 type Props = {
-  headerType?: "dark" | "light";
+  headerType?: "white" | "primary";
   className?: string;
 };
 
 export default function PublicHeader({
-  headerType = "dark",
+  headerType = "primary",
   className,
 }: Props) {
   const { token, user } = getUserDataFromServer();
@@ -30,12 +30,12 @@ export default function PublicHeader({
           className,
           "_app-layout py-4 lg:py-6 hidden lg:flex justify-between items-center gap-x-28",
           {
-            "shadow-sm": headerType === "dark",
+            "shadow-sm": headerType === "primary",
           }
         )}
       >
         <figure className="flex-none">
-          <Logo type={headerType === "light" ? "white" : "black"} />
+          <Logo type={headerType === "white" ? "white" : "primary"} />
         </figure>
         <SearchInput
           className="grow max-w-[450px] flex justify-end"
@@ -48,8 +48,8 @@ export default function PublicHeader({
                 key={`nav-item-${i}`}
                 href={navItem.link}
                 className={cn("font-medium", {
-                  "text-white": headerType === "light",
-                  "text-gray-700": headerType === "dark",
+                  "text-white": headerType === "primary",
+                  "text-gray-700": headerType === "white",
                 })}
               >
                 {navItem.name}
@@ -63,6 +63,7 @@ export default function PublicHeader({
                 height={30}
                 width={30}
                 alt="avatar"
+                className="rounded"
               />
             </Link>
           ) : (

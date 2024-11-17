@@ -1,5 +1,7 @@
 import cn from "@/app/utils/class-names";
 import CategoryCard from "../components/category-card";
+import Link from "next/link";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 type Props = {
   categories: TCategory[];
@@ -18,6 +20,14 @@ export default function CategoriesList({ categories, className }: Props) {
           <CategoryCard key={`category-${i}`} category={category} />
         ))}
       </div>
+
+      <Link
+        href={"/categories"}
+        className="mt-14 col-span-4 flex justify-center items-center"
+      >
+        <MdOutlineKeyboardArrowDown size={24} className="text-secondary" />
+        <button className="font-medium text-secondary">More Categories</button>
+      </Link>
     </section>
   );
 }
