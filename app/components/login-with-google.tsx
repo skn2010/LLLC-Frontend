@@ -18,7 +18,6 @@ export default function LoginWithGoogle({ className, headerType }: Props) {
   const googleLogin = async (credential: string) => {
     try {
       const response = await login(credential);
-      console.log(response);
 
       // Let set user data
       const request = await fetch("/api/auth", {
@@ -63,8 +62,8 @@ export default function LoginWithGoogle({ className, headerType }: Props) {
       <Link
         href={"/login"}
         className={cn("_btn", className, {
-          "_secondary-light-outline-btn": headerType === "white",
-          "_secondary-dark-outline-btn": headerType === "primary",
+          "border text-gray-700": headerType === "white",
+          "border text-white": headerType === "primary",
         })}
       >
         Login

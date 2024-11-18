@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="_app-layout py-16 bg-[#F7F7F7]">
       <div className="_container-layout grid grid-cols-12 gap-x-6 gap-y-8">
         <div className="col-span-12 lg:col-span-6">
-          <Logo type="black" />
+          <Logo />
           <p className="mt-4 text-[14px] text-gray-600">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry`s standard dummy text

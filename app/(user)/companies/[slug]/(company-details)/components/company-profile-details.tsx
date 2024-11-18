@@ -17,7 +17,7 @@ export default function CompanyProfileDetails({
       <div className="flex flex-wrap items-center gap-2">
         <figure className="flex justify-center">
           <Image
-            src={"/hero.png"}
+            src={companyDetails?.cover_image?.url || "/home-hero.jpg"}
             alt="profile-img"
             width={40}
             height={40}

@@ -5,7 +5,7 @@ import CategoryList from "./container/category-list";
 export default function Profile() {
   return (
     <>
-      <PublicHeader headerType="dark" />
+      <PublicHeader headerType="white" />
       <main className="_app-layout py-6">
         <div className="_container-layout min-h-[calc(100dvh-150px)]">
           <CategoryList />

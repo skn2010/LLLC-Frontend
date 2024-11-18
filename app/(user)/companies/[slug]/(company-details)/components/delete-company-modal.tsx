@@ -67,8 +67,9 @@ export default function DeleteCompanyModal({
       <form onSubmit={handleSubmit}>
         <div className="mt-4">
           <p className="text-sm text-red-500 font-medium">
-            After deleting your company details, we'll retain the information
-            for one year for security, then it will be automatically removed.
+            After deleting your company details, we&apos;ll retain the
+            information for one year for security, then it will be automatically
+            removed.
           </p>
           <p className="text-sm mt-2">
             Enter the company name {`"${companyData.name}"`} to proceed to

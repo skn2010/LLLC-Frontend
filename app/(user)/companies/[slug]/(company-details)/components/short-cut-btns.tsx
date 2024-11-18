@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import cn from "@/app/utils/class-names";
-import { IoMdStarOutline } from "react-icons/io";
 import { TbUserEdit } from "react-icons/tb";
 import { MdDeleteOutline } from "react-icons/md";
 import DeleteCompanyModal from "./delete-company-modal";
@@ -27,13 +26,6 @@ export default function ShortCutBtns({
   return (
     <>
       <section className={cn(className, "flex flex-wrap gap-3")}>
-        {!isUserOwnerOfCompany ? (
-          <button className="_btn _primary-btn flex items-center gap-x-2">
-            <IoMdStarOutline size={20} className="text-white" />
-            <span>Write a review</span>
-          </button>
-        ) : null}
-
         {isUserOwnerOfCompany ? (
           <>
             <Link

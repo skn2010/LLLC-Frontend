@@ -10,6 +10,7 @@ import ReviewDistribution from "../components/review-distribution";
 import CompanyList from "../components/company-list";
 import { getUsersCompanyList } from "@/app/services/company/get-user-company-list.service";
 import { getUserStatisticsApi } from "@/app/services/user/get-user-statistics.service";
+import Logout from "../components/logout";
 
 async function loadData(userId: string, token: string) {
   const userDetails = async () => {
@@ -96,13 +97,19 @@ export default async function ProfileSection({ className }: Props) {
         <div className="mt-3 p-6 border rounded-md grid grid-cols-2">
           <div className="col-span-2 sm:col-span-1">
             <p className="text-sm font-semibold text-gray-700">Location</p>
-            <p className="mt-1 text-sm text-gray-700">Pokhara, Kaski</p>
+            <p className="mt-1 text-sm text-gray-700">
+              {(userData.data as TUser).address}
+            </p>
           </div>
           <div className="col-span-2 sm:col-span-1">
             <p className="text-sm font-semibold text-gray-700">Joined since</p>
-            <p className="mt-1 text-sm text-gray-700">2020-11-12</p>
+            <p className="mt-1 text-sm text-gray-700">
+              {(userData.data as TUser).join_date.split("T")[0]}
+            </p>
           </div>
         </div>
+
+        <Logout className="mt-12" />
       </div>
     </div>
   );

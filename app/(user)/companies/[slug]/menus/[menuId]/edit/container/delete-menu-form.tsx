@@ -44,7 +44,7 @@ export default function DeleteMenu({ menuId, name }: Props) {
         Delete Menu
       </h4>
       <p className="mt-2.5 text-md text-gray-700 font-semibold">
-        Enter the "{name}" to delete this menu
+        Enter the {name} to delete this menu
       </p>
 
       <input

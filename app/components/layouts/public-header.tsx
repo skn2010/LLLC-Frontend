@@ -35,11 +35,11 @@ export default function PublicHeader({
         )}
       >
         <figure className="flex-none">
-          <Logo type={headerType === "white" ? "white" : "primary"} />
+          <Logo />
         </figure>
         <SearchInput
           className="grow max-w-[450px] flex justify-end"
-          headerType="dark"
+          headerType="white"
         />
         <div className="flex-none flex items-center gap-x-8">
           {publicNavList.map((navItem, i) => {

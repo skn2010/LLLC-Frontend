@@ -32,14 +32,15 @@ export default async function Menus({ params }: { params: { slug: string } }) {
   const { user } = getUserDataFromServer();
   const companyId = params.slug;
   const [companyData] = await loadData(companyId);
-  const isAuthorizedUser = user?._id === companyData?.data.created_by?._id;
+  const isAuthorizedUser =
+    user?._id === companyData?.data.created_by?._id || user?.is_admin;
 
   if (!companyData) {
     redirect("/");
   }
   return (
     <>
-      <PublicHeader headerType="dark" />
+      <PublicHeader headerType="white" />
       <AppLayout className="pt-6 pb-10">
         <ContainerLayout>
           {isAuthorizedUser ? (

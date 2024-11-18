@@ -12,6 +12,7 @@ type ImageSliderProps = {
 };
 
 export default function ImageSlider({ images }: ImageSliderProps) {
+  const imagesCount = images.length;
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrevClick = () => {
@@ -46,18 +47,24 @@ export default function ImageSlider({ images }: ImageSliderProps) {
           </div>
         ))}
       </div>
-      <button
-        onClick={handlePrevClick}
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-3 rounded-full focus:outline-none hover:bg-opacity-75"
-      >
-        <MdOutlineKeyboardArrowLeft size={22} />
-      </button>
-      <button
-        onClick={handleNextClick}
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-3 rounded-full focus:outline-none hover:bg-opacity-75"
-      >
-        <MdOutlineKeyboardArrowRight size={22} />
-      </button>
+      {imagesCount > 1 ? (
+        <>
+          <button
+            onClick={handlePrevClick}
+            className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-3 rounded-full focus:outline-none hover:bg-opacity-75"
+          >
+            <MdOutlineKeyboardArrowLeft size={22} />
+          </button>
+
+          <button
+            onClick={handleNextClick}
+            className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-3 rounded-full focus:outline-none hover:bg-opacity-75"
+          >
+            <MdOutlineKeyboardArrowRight size={22} />
+          </button>
+        </>
+      ) : null}
+
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
         {images.map((_, index) => (
           <div

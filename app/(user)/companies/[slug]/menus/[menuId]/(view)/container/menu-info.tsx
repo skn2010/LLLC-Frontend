@@ -13,7 +13,7 @@ export default function MenuInfo({ menu, className }: Props) {
         <div className="mt-6 flex items-center gap-x-4">
           <figure>
             <Image
-              src={"/hero.png"}
+              src={menu.created_by?.avatar || "/home-hero.jpg"}
               alt="profile-img"
               width={80}
               height={80}

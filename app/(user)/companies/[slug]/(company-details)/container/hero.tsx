@@ -46,7 +46,10 @@ export default function Hero({
           <div className="mt-6 flex items-center gap-x-4">
             <figure>
               <Image
-                src={(companyDetails.created_by as TUser).avatar || "/hero.png"}
+                src={
+                  (companyDetails.created_by as TUser).avatar ||
+                  "/home-hero.jpg"
+                }
                 alt="profile-img"
                 width={80}
                 height={80}

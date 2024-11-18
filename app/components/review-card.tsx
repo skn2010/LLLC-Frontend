@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { FaRegHandPeace } from "react-icons/fa6";
@@ -111,7 +112,7 @@ export default function ReviewCard({
         <div className="p-4 flex items-center gap-x-2">
           <div>
             <Image
-              src={"/hero.png"}
+              src={review?.review_by?.avatar || "/home-hero.jpg"}
               alt="profile-img"
               width={48}
               height={48}
@@ -157,9 +158,12 @@ export default function ReviewCard({
       <ImageSlider images={review.images.map((img) => img.url)} />
 
       <div className="mt-4 px-4">
-        <h3 className="text-[16px] font-bold text-gray-800">
+        <Link
+          href={`/companies/${review.company._id}`}
+          className="text-[16px] font-bold text-gray-800"
+        >
           {review?.company?.name || "Undefined"}
-        </h3>
+        </Link>
         <RatingStar
           rating={review.rating_star as 1 | 2 | 3 | 4 | 5}
           size={24}

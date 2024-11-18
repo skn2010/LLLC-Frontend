@@ -12,6 +12,7 @@ import CompanyLocation from "./components/company-location";
 import { getCompanyDetailsApi } from "@/app/services/company/get-company.service";
 import getPopularMenusOfCompanyApi from "@/app/services/menu/get-popular-menus-of-company.service";
 import getUserDataFromServer from "@/app/utils/get-user-data-from-server";
+import cn from "@/app/utils/class-names";
 
 type TCompanyDetailsWithStats = {
   data: TCompanyDetails;
@@ -54,7 +55,7 @@ export default async function CompanyDetails({
 
   return (
     <>
-      <PublicHeader headerType="dark" />
+      <PublicHeader headerType="white" />
       <main className="pb-10">
         <Hero
           companyDetails={companyData.data}
@@ -71,7 +72,12 @@ export default async function CompanyDetails({
                 companyName={companyData.data.name}
                 className="mt-10"
               />
-              <hr className="my-10" />
+              <hr
+                className={cn("my-10", {
+                  hidden:
+                    (companyData.data.created_by as TUser)._id !== user._id,
+                })}
+              />
               <AboutCompany companyDescription={companyData.data.description} />
               <MenuList
                 companyId={params.slug}

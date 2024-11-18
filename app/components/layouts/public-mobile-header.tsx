@@ -16,7 +16,7 @@ export default function PublicMobileHeader({ className }: Props) {
   return (
     <header className={cn(className, "")}>
       <div className="flex justify-between items-center gap-x-4">
-        <Logo type="primary" className="text-red-600" />
+        <Logo className="text-red-600" />
         {user && token ? (
           <Link href="/profile">
             <Image

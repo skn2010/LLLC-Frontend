@@ -39,7 +39,7 @@ export default async function ViewMenu({
 
   return (
     <>
-      <PublicHeader headerType="dark" />
+      <PublicHeader headerType="white" />
       <AppLayout className="pt-6 pb-10">
         <ContainerLayout>
           <ImageSlider images={menuData.images.map((item) => item.url)} />

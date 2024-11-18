@@ -40,14 +40,15 @@ export default async function EditCompany({
 
   if (
     !companyData ||
-    ((companyData.data as TCompany).created_by as TUser)._id !== user._id
+    ((companyData.data as TCompany).created_by as TUser)._id !== user._id ||
+    !user?.is_admin
   ) {
     redirect("/");
   }
 
   return (
     <>
-      <PublicHeader headerType="dark" />
+      <PublicHeader headerType="white" />
       <main className="_app-layout pt-6 pb-10">
         <div className="_container-layout">
           <EditCompanyForm

@@ -12,7 +12,7 @@ type Props = {
 export default function CompanyListPage({ searchParams }: Props) {
   return (
     <>
-      <PublicHeader headerType="dark" />
+      <PublicHeader headerType="white" />
       <main className="pb-10">
         <div className="_container-layout min-h-[calc(100dvh-150px)] mt-10">
           <CompanyList
