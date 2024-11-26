@@ -38,6 +38,7 @@ export default function LoginWithGoogle({ className, headerType }: Props) {
 
       toast.success(response?.message || "Login successful.");
       router.push("/profile");
+      router.refresh();
     } catch (e: any) {
       console.log(e);
     }

@@ -1,5 +1,9 @@
 import http from "@/app/utils/http";
 
+type Props = {
+  auth?: { token: string };
+};
+
 type Response = {
   data: TReview[];
   currentPage: number;
@@ -8,10 +12,11 @@ type Response = {
   totalPages: number;
 };
 
-export default async function getPopularReviewsApi() {
+export default async function getPopularReviewsApi({ auth }: Props) {
   const response: Response = await http("/reviews/popular?page=1", {
     method: "GET",
-    includeAuth: false,
+    includeAuth: true,
+    token: auth?.token,
     next: {
       cache: "no-store",
       tags: ["popular-reviews"],

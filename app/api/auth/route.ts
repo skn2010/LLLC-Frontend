@@ -21,11 +21,13 @@ export async function POST(req: NextRequest) {
   try {
     const days = 24 * 60 * 60 * 1000 * 28; // automatically clear after 28 days
 
+    cookies().set({ name: "hello", value: "omg" });
+
     cookies().set({
       name: "token",
       value: data.token,
       httpOnly: true,
-      secure: true,
+      // secure: true,
       sameSite: true,
       expires: Date.now() + days,
     });
@@ -34,7 +36,7 @@ export async function POST(req: NextRequest) {
       name: "user",
       value: JSON.stringify(data.user || {}),
       httpOnly: true,
-      secure: true,
+      // secure: true,
       sameSite: true,
       expires: Date.now() + days,
     });

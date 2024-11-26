@@ -20,9 +20,9 @@ const getCategories = async () => {
   }
 };
 
-const getPopularReviews = async () => {
+const getPopularReviews = async (token: string) => {
   try {
-    const res = await getPopularReviewsApi();
+    const res = await getPopularReviewsApi({ auth: { token } });
     return res.data;
   } catch {
     return [];
@@ -30,9 +30,9 @@ const getPopularReviews = async () => {
 };
 
 export default async function UserHome() {
-  const { user } = getUserDataFromServer();
+  const { user, token } = getUserDataFromServer();
   const categories = await getCategories();
-  const reviews = await getPopularReviews();
+  const reviews = await getPopularReviews(token as string);
 
   return (
     <>
