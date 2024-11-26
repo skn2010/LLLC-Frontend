@@ -2,7 +2,7 @@ import Footer from "@/app/components/layouts/footer";
 import PublicHeader from "@/app/components/layouts/public-header";
 import CategoryList from "./container/category-list";
 
-export default function Profile() {
+export default function Categories() {
   return (
     <>
       <PublicHeader headerType="white" />

@@ -10,7 +10,7 @@ type Props = {
 export default function CategoryCard({ category, className }: Props) {
   return (
     <Link
-      href={`/companies?category=${category._id}`}
+      href={`/companies?categoryId=${category._id}`}
       className={cn(
         className,
         "aspect-[1/0.7] flex justify-center items-center rounded-md border border-gray-300 hover:shadow-md"
