@@ -28,7 +28,7 @@ export default function PublicMobileHeader({ className }: Props) {
             />
           </Link>
         ) : (
-          <LoginWithGoogle headerType={"primary"} />
+          <LoginWithGoogle headerType={"white"} />
         )}
       </div>
 
